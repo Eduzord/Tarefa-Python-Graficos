@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt #permite criar gráficos e visualizações de da
 import seaborn as sns #  cria gráficos, facilita e deixa tudo mais bonito com menos código. Simplifica a visualização quando se trabalha com DataFrames
                       # seaborn estende de matplotlib 
 
-df = pd.read_excel('total_de_consultas.xlsx')
+df = pd.read_excel('consultas.xlsx')
 
 # VARIAVEL padrao_diario_consultas USADA PARA OS DOIS ÚLTIMOS GRÁFICOS
 quantidadeDeMedicos = 3
@@ -34,14 +34,14 @@ df_grafico_mensal = pd.DataFrame({
 }) 
 
 # Gráfico: Consultas Mensais e suas configurações 
-# plt.figure(figsize=(10,5))
-# sns.lineplot(data=df_grafico_mensal, x="Mês", y="Consultas", marker="o", label="Consultas Mensais") 
-# plt.title("Número de Consultas por Mês")
-# plt.xlabel("Mês")
-# plt.ylabel("Total de Consultas")
-# plt.legend()
-# plt.grid()
-# plt.show() #Exibir o gráfico
+plt.figure(figsize=(10,5))
+sns.lineplot(data=df_grafico_mensal, x="Mês", y="Consultas", marker="o", label="Consultas Mensais")
+plt.title("Número de Consultas por Mês")
+plt.xlabel("Mês")
+plt.ylabel("Total de Consultas")
+plt.legend()
+plt.grid()
+plt.show() #Exibir o gráfico
 
 
 #============CONSULTAS SEMANAIS===============
@@ -65,14 +65,14 @@ df_grafico_semanal = pd.DataFrame({
 })
  
 # Gráfico: Consultas Semanais e suas configurações 
-# plt.figure(figsize=(10, 5)) # altura 10 , largura 5
-# sns.lineplot(data=df_grafico_semanal, x="Semana", y="Consultas", marker="o", label="Consultas Semanais")
-# plt.title("Número de Consultas por Semana")
-# plt.xlabel("Semana")
-# plt.ylabel("Total de Consultas")
-# plt.legend()
-# plt.grid()
-# plt.show()
+plt.figure(figsize=(10, 5)) # altura 10 , largura 5
+sns.lineplot(data=df_grafico_semanal, x="Semana", y="Consultas", marker="o", label="Consultas Semanais")
+plt.title("Número de Consultas por Semana")
+plt.xlabel("Semana")
+plt.ylabel("Total de Consultas")
+plt.legend()
+plt.grid()
+plt.show()
 
 
 #=================CUSTO POR SEMANA=================
@@ -85,7 +85,7 @@ for coluna in range(12):
     consultaSemana = df.iloc[linha + 2, coluna + 1]
     if consultaSemana > padraoConsultaPorDia:
       consultasExtras = consultaSemana - padraoConsultaPorDia
-      valorTotalSemana += (consultasExtras * 200) * 2
+      valorTotalSemana += (consultasExtras * valorConsulta) * 2
 
   custoMedicosSemanal.append(valorTotalSemana)
   valorTotalSemana = 0
@@ -97,14 +97,14 @@ df_grafico_custo_semanal = pd.DataFrame({
 })
 
 # Gráfico: Consultas extras Semanais e suas configurações
-# plt.figure(figsize=(10, 5))
-# sns.lineplot(data=df_grafico_custo_semanal, x="Semana", y="Consultas Extras", marker="s", color="red", label="Custo Semanal")
-# plt.title("Custo das Consultas Extras por Semana")
-# plt.xlabel("Semana")
-# plt.ylabel("Custo por Semana")
-# plt.legend()
-# plt.grid()
-# plt.show()
+plt.figure(figsize=(10, 5))
+sns.lineplot(data=df_grafico_custo_semanal, x="Semana", y="Consultas Extras", marker="s", color="red", label="Custo Semanal")
+plt.title("Custo das Consultas Extras por Semana")
+plt.xlabel("Semana")
+plt.ylabel("Custo por Semana")
+plt.legend()
+plt.grid()
+plt.show()
 
 
 
@@ -125,7 +125,7 @@ for coluna in range(12):
     consultaMes = df.iloc[linha + 2, coluna + 1]
     if consultaMes > padraoConsultaPorDia:
       consultasExtras = consultaMes - padraoConsultaPorDia
-      valorTotalMes += (consultasExtras * 200) * 2
+      valorTotalMes += (consultasExtras * valorConsulta) * 2
   dadosGraficoCustoMensal(coluna + 1)   
 
 # # DataFrame para o gráfico de Custo para consultas extras mensais
