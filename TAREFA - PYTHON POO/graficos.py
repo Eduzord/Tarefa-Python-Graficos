@@ -106,7 +106,41 @@ plt.legend()
 plt.grid()
 plt.show()
 
+# =================QUANTIDADE DE CONSULTAS EXTRAS POR SEMANA=================
+consultasExcedentesDiarias = []  # Lista para armazenar os excessos diários por semana
 
+for coluna in range(12):
+    semana_excedentes = []  # Lista para armazenar os excessos diários dessa semana
+
+    for linha in range(5):
+        consultaSemana = df.iloc[linha + 2, coluna + 1]
+        if consultaSemana > padraoConsultaPorDia:
+            excedente = consultaSemana - padraoConsultaPorDia
+        else:
+            excedente = 0  # Se não exceder, o valor é 0
+
+        semana_excedentes.append(excedente)  # Adiciona o valor do dia à lista da semana
+
+    consultasExcedentesDiarias.append(semana_excedentes)
+
+# Criar DataFrame com os dados organizados
+dias_da_semana = ["Seg", "Ter", "Qua", "Qui", "Sex"]
+semanas = [f"Semana {i}" for i in range(1, 13)]
+df_excedentes = pd.DataFrame(consultasExcedentesDiarias, columns=dias_da_semana, index=semanas)
+
+# Configurar o tamanho do gráfico
+plt.figure(figsize=(12, 6))
+
+# Criar heatmap com seaborn
+sns.heatmap(df_excedentes, annot=True, cmap="coolwarm", linewidths=0.5, fmt=".0f")
+
+# Configurações do gráfico
+plt.title("Excedente de Consultas por Dia e Semana")
+plt.xlabel("Dia da Semana")
+plt.ylabel("Semana")
+
+# Exibir o gráfico
+plt.show()
 
 #====================CUSTO POR MÊS=======================
 valorTotalMes = 0 
@@ -137,7 +171,7 @@ df_grafico_custo_mensal = pd.DataFrame({
 # # Gráfico: Custo  mensais e suas configurações
 plt.figure(figsize=(10, 5))
 sns.lineplot(data=df_grafico_custo_mensal, x="Mês", y="Custo Extra Consultas Mensal", marker="s", color="red", label="Custo Mensal")
-plt.title("Custo das Custo  por Mês")
+plt.title("Custo das Consultas extras por Mês")
 plt.xlabel("Mês")
 plt.ylabel("Custo por Mês")
 plt.legend()
